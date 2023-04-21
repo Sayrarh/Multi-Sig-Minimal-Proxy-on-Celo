@@ -43,7 +43,7 @@ contract MultisigWallet {
         address[] memory _owners,
         uint8 _quorum
     ) external payable {
-        require(!initialState, "Contract Already Initialized");
+        require(initialState, "Contract Already Initialized");
         require(_quorum <= _owners.length, "Out of Bound!");
 
         require(_owners.length <= MAX_OWNERS, "Invalid owners");
@@ -56,6 +56,7 @@ contract MultisigWallet {
         validOwners = _owners;
         numofApprovalsRequired = _quorum;
         factory = msg.sender;
+        initialState = true;
     }
 
     /////////////////FUNCTIONS/////////////////

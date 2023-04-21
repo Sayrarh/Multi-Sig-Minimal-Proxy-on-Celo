@@ -8,7 +8,7 @@ contract MultisigProxyFactory {
     event ContractCreated(address indexed newMultisig, uint256 position);
 
     address implementation;
-    address[] allMultiSigContractAddresses;
+    address[] allClonedMultiSigContractAddresses;
 
     uint256 contractIndex = 1;
 
@@ -22,7 +22,7 @@ contract MultisigProxyFactory {
     function createClone(
         address[] memory validSigners,
         uint8 _quorum
-    ) external returns (address) {
+    ) external payable returns (address) {
         bytes32 salt = keccak256(
             abi.encodePacked(block.timestamp, contractIndex)
         );
@@ -30,19 +30,19 @@ contract MultisigProxyFactory {
         IMultisigWallet(proxy).initialize(validSigners, _quorum);
 
         getContractAddress[contractIndex] = proxy;
-        allMultiSigContractAddresses.push(proxy);
+        allClonedMultiSigContractAddresses.push(proxy);
 
         contractIndex = contractIndex + 1;
 
-        emit ContractCreated(proxy, allMultiSigContractAddresses.length);
+        emit ContractCreated(proxy, allClonedMultiSigContractAddresses.length);
         return proxy;
     }
 
     function getAllCreatedAddresses() external view returns (address[] memory) {
-        return allMultiSigContractAddresses;
+        return allClonedMultiSigContractAddresses;
     }
 
     function returnClonedContractLength() external view returns (uint256) {
-        return contractIndex;
+        return allClonedMultiSigContractAddresses.length;
     }
 }
