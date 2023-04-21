@@ -15,7 +15,8 @@ contract MultisigWallet {
     ///////////////////STATE VARIABLES/////////////////
     uint8 public constant MAX_OWNERS = 20;
     uint8 numofApprovalsRequired;
-    address public immutable factory;
+    address public factory;
+    bool initialState;
     address[] validOwners;
 
     struct Transaction {
@@ -38,7 +39,11 @@ contract MultisigWallet {
     mapping(address => bool) isOwner;
 
     ///////////////////CONSTRUCTOR/////////////////////
-    constructor(address[] memory _owners, uint8 _quorum) payable {
+    function initialize(
+        address[] memory _owners,
+        uint8 _quorum
+    ) external payable {
+        require(!initialState, "Contract Already Initialized");
         require(_quorum <= _owners.length, "Out of Bound!");
 
         require(_owners.length <= MAX_OWNERS, "Invalid owners");
