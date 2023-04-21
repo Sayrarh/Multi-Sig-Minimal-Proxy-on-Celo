@@ -39,11 +39,8 @@ contract MultisigWallet {
     mapping(address => bool) isOwner;
 
     ///////////////////CONSTRUCTOR/////////////////////
-    function initialize(
-        address[] memory _owners,
-        uint8 _quorum
-    ) external payable {
-        require(initialState, "Contract Already Initialized");
+    function initialize(address[] memory _owners, uint8 _quorum) external {
+        require(initialState == false, "Contract Already Initialized");
         require(_quorum <= _owners.length, "Out of Bound!");
 
         require(_owners.length <= MAX_OWNERS, "Invalid owners");

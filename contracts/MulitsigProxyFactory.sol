@@ -22,7 +22,7 @@ contract MultisigProxyFactory {
     function createClone(
         address[] memory validSigners,
         uint8 _quorum
-    ) external payable returns (address) {
+    ) external returns (address) {
         bytes32 salt = keccak256(
             abi.encodePacked(block.timestamp, contractIndex)
         );

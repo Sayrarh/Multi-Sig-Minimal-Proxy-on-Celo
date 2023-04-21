@@ -12,6 +12,7 @@
   "dependencies": {
     "-": "^0.0.1",
     "@openzeppelin/contracts": "^4.8.3",
+    "dotenv": "^16.0.3",
     "save-dev": "^0.0.1-security"
   },
   "devDependencies": {
