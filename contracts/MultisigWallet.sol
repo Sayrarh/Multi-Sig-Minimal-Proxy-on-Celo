@@ -11,17 +11,17 @@ contract MultisigWallet {
         uint256 value
     );
     event TransactionApproved(address indexed owner, uint256 indexed txnID);
-    
+
     ///////////////////STATE VARIABLES/////////////////
     uint8 public constant MAX_OWNERS = 20;
     uint8 numofApprovalsRequired;
     address public immutable factory;
     address[] validOwners;
-    
+
     struct Transaction {
-        address recipient; 
-        uint8 numOfConformations; 
-        bool approved; 
+        address recipient;
+        uint8 numOfConformations;
+        bool approved;
         uint80 amountRequested;
     }
 
@@ -36,7 +36,6 @@ contract MultisigWallet {
     mapping(uint256 => mapping(address => bool)) public hasApprovedtxn;
     //mapping to check if an address is part of the owners
     mapping(address => bool) isOwner;
-
 
     ///////////////////CONSTRUCTOR/////////////////////
     constructor(address[] memory _owners, uint8 _quorum) payable {
@@ -53,7 +52,6 @@ contract MultisigWallet {
         numofApprovalsRequired = _quorum;
         factory = msg.sender;
     }
-
 
     /////////////////FUNCTIONS/////////////////
     function requestTransaction(
@@ -125,7 +123,7 @@ contract MultisigWallet {
         return allTransactions;
     }
 
-    function allSuccessfulTxnIDs() external view returns(uint256[] memory){
+    function allSuccessfulTxnIDs() external view returns (uint256[] memory) {
         return successfulTxnIDs;
     }
 
