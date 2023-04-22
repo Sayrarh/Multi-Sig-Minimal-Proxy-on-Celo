@@ -1,8 +1,7 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
 contract MultisigWallet {
-    ////////////////////EVENTS///////////////////////
     event Deposit(address indexed sender, uint256 amount, uint256 contractBal);
     event TransactionRequested(
         address indexed owner,
@@ -12,7 +11,6 @@ contract MultisigWallet {
     );
     event TransactionApproved(address indexed owner, uint256 indexed txnID);
 
-    ///////////////////STATE VARIABLES/////////////////
     uint8 public constant MAX_OWNERS = 20;
     uint8 numofApprovalsRequired;
     address public factory;
@@ -38,7 +36,6 @@ contract MultisigWallet {
     //mapping to check if an address is part of the owners
     mapping(address => bool) isOwner;
 
-    ///////////////////CONSTRUCTOR/////////////////////
     function initialize(address[] memory _owners, uint8 _quorum) external {
         require(initialState == false, "Contract Already Initialized");
         require(_quorum <= _owners.length, "Out of Bound!");
@@ -56,7 +53,6 @@ contract MultisigWallet {
         initialState = true;
     }
 
-    /////////////////FUNCTIONS/////////////////
     function requestTransaction(
         address _to,
         uint80 _amount

@@ -1,12 +1,11 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-import { any } from "hardhat/internal/core/params/argumentTypes";
 require("dotenv").config();
 
 
 type HttpNetworkAccountsUserConfig = any;
 const config: HardhatUserConfig = {
-  solidity: "0.8.9",
+  solidity: "0.8.4",
   networks: {
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
