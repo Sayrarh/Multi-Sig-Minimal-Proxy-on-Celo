@@ -11,7 +11,7 @@ contract MinimalProxy {
     mapping(uint256 => address) cloneAddresses;
     uint256 contractIndex = 1;
 
-    mapping(uint256 => address) public _deployer;
+    mapping(address => uint256) public _deployerIndex;
 
     address[] allClonedMultiSigContractAddresses;
 
@@ -85,7 +85,7 @@ contract MinimalProxy {
         IMultisigWallet(proxy).initialize(validSigners, _quorum);
 
         cloneAddresses[contractIndex] = proxy;
-        _deployer[contractIndex] = msg.sender;
+        _deployerIndex[msg.sender] = contractIndex;
 
         allClonedMultiSigContractAddresses.push(proxy);
 
