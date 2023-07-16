@@ -11,6 +11,8 @@ contract MinimalProxy {
     mapping(uint256 => address) cloneAddresses;
     uint256 contractIndex = 1;
 
+    mapping(uint256 => address) public _deployer;
+
     address[] allClonedMultiSigContractAddresses;
 
     function createClone(
@@ -83,6 +85,8 @@ contract MinimalProxy {
         IMultisigWallet(proxy).initialize(validSigners, _quorum);
 
         cloneAddresses[contractIndex] = proxy;
+        _deployer[contractIndex] = msg.sender;
+
         allClonedMultiSigContractAddresses.push(proxy);
 
         contractIndex = contractIndex + 1;
@@ -91,10 +95,16 @@ contract MinimalProxy {
         return proxy;
     }
 
+    /**
+     * @dev Returns the clone contract address at the specified index.
+     */
     function getCloneAddress(uint256 _index) external view returns (address) {
         return cloneAddresses[_index];
     }
 
+    /**
+     * @dev Returns the current index
+     */
     function getCurrentIndex() external view returns (uint256) {
         return allClonedMultiSigContractAddresses.length;
     }
